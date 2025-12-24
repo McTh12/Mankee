@@ -88,6 +88,16 @@
     }
     .btn.primary:hover{background:rgba(255,255,255,.92)}
 
+    .pill{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.35);
+      font-size:12px;
+      color:var(--muted);
+    }
+
     /* HERO */
     header{padding: clamp(26px, 5vw, 54px) 0 28px}
     .hero h2{
@@ -144,15 +154,80 @@
       color:var(--muted2);
     }
 
+    /* Modal / Basket */
+    .modalWrap{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      background:rgba(0,0,0,.75);
+      z-index:100;
+      padding:16px;
+    }
+    .modal{
+      background:#0a0a0a;
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:24px;
+      padding:18px;
+      width:90%;
+      max-width:520px;
+      box-shadow: var(--shadow);
+    }
+    .modalHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:12px;
+      gap:12px;
+    }
+    .modalHead strong{
+      letter-spacing:.18em;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .cartRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:12px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      margin:12px 0;
+    }
+    .cartRow .title{font-weight:800}
+    .cartRow .sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .qty{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .qty button{
+      width:30px;
+      height:30px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(255,255,255,.05);
+      color:white;
+      cursor:pointer;
+    }
+    .qty button:hover{background:rgba(255,255,255,.12)}
+    .total{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-top:1px solid rgba(255,255,255,.12);
+      padding-top:12px;
+      margin-top:12px;
+    }
+
     /* Mobile adjustments */
     @media (max-width: 720px){
-      .brandText{display:none;} /* keeps header clean on small screens */
+      .brandText{display:none;}
     }
     @media (max-width: 600px){
-      .brandLogo{
-        width:240px;
-        height:84px;
-      }
+      .brandLogo{width:240px;height:84px;}
       .btn{padding:9px 12px;border-radius:16px}
     }
   </style>
@@ -170,7 +245,10 @@
         <div class="tag">DIRTY BY DESIGN</div>
       </div>
     </div>
-    <button class="btn">Cart</button>
+
+    <button class="btn" id="openCart">
+      Basket (<span id="cartCount">0</span>)
+    </button>
   </div>
 </div>
 
@@ -179,7 +257,7 @@
   <div class="hero">
     <h2>DIRTY<br>BY DESIGN<span class="muted">Grimey streetwear. Built to wear in.</span></h2>
     <p>
-      MANKEE is a UK streetwear brand rooted in raw identity. oversized fits, washed textures,
+      MANKEE is a UK streetwear brand rooted in raw identity. Oversized fits, washed textures,
       and minimal statements that hit every time. No polish. No gimmicks. Just pieces that look
       better worn.
     </p>
@@ -208,6 +286,16 @@
       <h3>Acid Wash Oversized Tee</h3>
       <p>Heavy cotton. Boxy oversized fit. Front chest MANKEE drip print. Back blank.</p>
       <div class="price">£28</div>
+
+      <button class="btn primary" id="addToBasket" style="margin-top:14px;">
+        Add to Basket
+      </button>
+
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="pill">Oversized</span>
+        <span class="pill">Acid Wash</span>
+        <span class="pill">Drop 001</span>
+      </div>
     </div>
   </div>
 </header>
@@ -232,10 +320,123 @@
   © <span id="yr"></span> MANKEE — DIRTY BY DESIGN
 </footer>
 
+<!-- BASKET MODAL -->
+<div class="modalWrap" id="cartModal">
+  <div class="modal">
+    <div class="modalHead">
+      <strong>BASKET</strong>
+      <button class="btn" id="closeCart">Close</button>
+    </div>
+    <div id="cartBody"></div>
+  </div>
+</div>
+
 <script>
   document.getElementById("yr").textContent = new Date().getFullYear();
+
+  // Product data (single product for now)
+  const product = {
+    id: "tee-001",
+    name: "Acid Wash Oversized Tee",
+    desc: "Front chest MANKEE drip print. Back blank.",
+    price: 28
+  };
+
+  // Cart state
+  let qty = 0;
+
+  // Elements
+  const cartCountEl = document.getElementById("cartCount");
+  const cartModal = document.getElementById("cartModal");
+  const cartBody = document.getElementById("cartBody");
+
+  // Open/close
+  document.getElementById("openCart").addEventListener("click", () => {
+    renderCart();
+    cartModal.style.display = "grid";
+  });
+
+  document.getElementById("closeCart").addEventListener("click", () => {
+    cartModal.style.display = "none";
+  });
+
+  // Close by clicking background
+  cartModal.addEventListener("click", (e) => {
+    if (e.target === cartModal) cartModal.style.display = "none";
+  });
+
+  // Add to basket
+  document.getElementById("addToBasket").addEventListener("click", () => {
+    qty += 1;
+    renderCart();
+    cartModal.style.display = "grid";
+  });
+
+  function money(n){
+    return "£" + n.toFixed(0);
+  }
+
+  function renderCart(){
+    cartCountEl.textContent = qty;
+
+    if(qty === 0){
+      cartBody.innerHTML = "<p>Your basket is empty.</p>";
+      return;
+    }
+
+    const total = product.price * qty;
+
+    cartBody.innerHTML = `
+      <div class="cartRow">
+        <div>
+          <div class="title">${product.name}</div>
+          <div class="sub">${product.desc}</div>
+          <div class="sub">${money(product.price)} each</div>
+        </div>
+        <div class="qty">
+          <button id="minusBtn" aria-label="Decrease quantity">−</button>
+          <span>${qty}</span>
+          <button id="plusBtn" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+
+      <div class="total">
+        <span style="color:rgba(255,255,255,.65)">Total</span>
+        <strong>${money(total)}</strong>
+      </div>
+
+      <button class="btn primary" id="checkoutBtn" style="width:100%;margin-top:12px;">
+        Checkout
+      </button>
+
+      <button class="btn" id="removeBtn" style="width:100%;margin-top:8px;">
+        Remove item
+      </button>
+    `;
+
+    // Wire buttons (created dynamically)
+    document.getElementById("minusBtn").onclick = () => {
+      qty = Math.max(0, qty - 1);
+      renderCart();
+    };
+
+    document.getElementById("plusBtn").onclick = () => {
+      qty += 1;
+      renderCart();
+    };
+
+    document.getElementById("removeBtn").onclick = () => {
+      qty = 0;
+      renderCart();
+    };
+
+    document.getElementById("checkoutBtn").onclick = () => {
+      // Replace this with your real Stripe Payment Link when ready:
+      // Example: https://buy.stripe.com/xxxxxx
+      window.location.href = "https://buy.stripe.com/test_9B68wI94scnggVQ14Q8EM00";
+    };
+  }
 </script>
 
 </body>
 </html>
-
