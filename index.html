@@ -7,6 +7,57 @@
   <meta name="description" content="MANKEE is a grimey UK streetwear brand. Dirty by design." />
 
   <style>
+    /* Keep everything scaling nicely */
+.hero h2{
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1.02;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.hero p{
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.6;
+}
+
+/* Featured card image area */
+.tee-img{
+  height: clamp(280px, 45vw, 520px);
+}
+
+/* Card spacing */
+header{ padding: clamp(26px, 5vw, 54px) 0 28px; }
+section{ padding: clamp(26px, 5vw, 48px) 0; }
+.card{ border-radius: 28px; }
+
+/* Keep content from feeling too stretched */
+.wrap{ max-width: 1050px; }
+/* Keep everything scaling nicely */
+.hero h2{
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1.02;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.hero p{
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.6;
+}
+
+/* Featured card image area */
+.tee-img{
+  height: clamp(280px, 45vw, 520px);
+}
+
+/* Card spacing */
+header{ padding: clamp(26px, 5vw, 54px) 0 28px; }
+section{ padding: clamp(26px, 5vw, 48px) 0; }
+.card{ border-radius: 28px; }
+
+/* Keep content from feeling too stretched */
+.wrap{ max-width: 1050px; }
+
     :root{
       --bg:#050505;
       --bg2:#0b0b0b;
@@ -236,3 +287,4 @@
 
 </body>
 </html>
+
