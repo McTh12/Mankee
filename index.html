@@ -393,11 +393,7 @@
           <div class="sub">${product.desc}</div>
           <div class="sub">${money(product.price)} each</div>
         </div>
-        <div class="qty">
-          <button id="minusBtn" aria-label="Decrease quantity">−</button>
-          <span>${qty}</span>
-          <button id="plusBtn" aria-label="Increase quantity">+</button>
-        </div>
+       
       </div>
 
       <div class="total">
@@ -415,20 +411,40 @@
     `;
 
     // Wire buttons (created dynamically)
-    document.getElementById("minusBtn").onclick = () => {
-      qty = Math.max(0, qty - 1);
-      renderCart();
-    };
+   function renderCart(){
+  cartCountEl.textContent = qty;
 
-    document.getElementById("plusBtn").onclick = () => {
-      qty += 1;
-      renderCart();
-    };
+  if(qty === 0){
+    cartBody.innerHTML = "<p>Your basket is empty.</p>";
+    return;
+  }
 
-    document.getElementById("removeBtn").onclick = () => {
-      qty = 0;
-      renderCart();
-    };
+  const total = product.price * qty;
+
+  cartBody.innerHTML = `
+    <p><strong>${product.name}</strong></p>
+    <p>${money(product.price)} each</p>
+    <p><strong>Total: ${money(total)}</strong></p>
+
+    <button class="btn primary" id="checkoutBtn" style="width:100%;margin-top:14px;">
+      Checkout
+    </button>
+
+    <button class="btn" id="removeBtn" style="width:100%;margin-top:8px;">
+      Remove item
+    </button>
+  `;
+
+  document.getElementById("removeBtn").onclick = () => {
+    qty = 0;
+    renderCart();
+  };
+
+  document.getElementById("checkoutBtn").onclick = () => {
+    window.location.href = "https://buy.stripe.com/YOUR_REAL_LINK";
+  };
+}
+
 
     document.getElementById("checkoutBtn").onclick = () => {
       // Replace this with your real Stripe Payment Link when ready:
