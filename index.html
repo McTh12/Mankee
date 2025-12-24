@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MANKEE — DIRTY BY DESIGN</title>
+  <meta name="description" content="MANKEE is a grimey UK streetwear brand. Dirty by design." />
+
+  <style>
+    :root{
+      --bg:#050505;
+      --bg2:#0b0b0b;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.95);
+      --muted:rgba(255,255,255,.65);
+      --muted2:rgba(255,255,255,.45);
+      --chip:rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,0.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,0.06), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2) 50%, var(--bg));
+    }
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+
+    /* Top bar */
+    .topbar{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:blur(10px);
+      background:rgba(0,0,0,.5);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar .inner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 0;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:40px;height:40px;border-radius:16px;
+      border:1px solid var(--line);
+      background:var(--chip);
+      display:grid;place-items:center;
+      font-weight:800;letter-spacing:.2em;
+    }
+    .brand h1{margin:0;font-size:14px;letter-spacing:.25em}
+    .brand span{font-size:11px;color:var(--muted2)}
+
+    .btn{
+      border:1px solid var(--line);
+      background:var(--chip);
+      padding:10px 16px;
+      border-radius:18px;
+      cursor:pointer;
+    }
+    .btn:hover{background:rgba(255,255,255,.14)}
+    .btn.primary{
+      background:white;color:black;border-color:transparent;
+    }
+
+    /* Hero */
+    header{padding:48px 0 28px}
+    .hero h2{
+      font-size:56px;line-height:1.05;margin:0;
+      letter-spacing:-.02em;
+    }
+    .hero p{
+      max-width:60ch;
+      color:var(--muted);
+      margin-top:14px;
+      font-size:16px;
+      line-height:1.55;
+    }
+    .cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+
+    /* Featured tee */
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      margin-top:30px;
+    }
+    .tee-img{
+      height:420px;
+      background:
+        radial-gradient(120px 90px at 30% 40%, rgba(120,70,30,.35), transparent 60%),
+        radial-gradient(180px 120px at 60% 55%, rgba(120,70,30,.28), transparent 62%),
+        radial-gradient(240px 160px at 55% 35%, rgba(0,0,0,.65), transparent 70%),
+        linear-gradient(135deg, #0a0a0a, #101010);
+      position:relative;
+    }
+    .tee{
+      position:absolute;left:50%;top:52%;
+      transform:translate(-50%,-50%);
+      width:85%;height:88%;
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.1);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    }
+    .print{
+      position:absolute;left:14%;top:26%;
+      font-size:34px;font-weight:900;
+      letter-spacing:.08em;
+      color:rgba(245,235,220,.92);
+    }
+
+    .meta{padding:20px}
+    .meta h3{margin:0;font-size:20px}
+    .meta p{margin:6px 0 0;color:var(--muted)}
+    .price{font-size:22px;font-weight:800;margin-top:12px}
+
+    /* About */
+    section{padding:42px 0}
+    .about{
+      max-width:700px;
+    }
+    .about h3{font-size:26px;margin:0}
+    .about p{
+      margin-top:14px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    footer{
+      padding:40px 0;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted2);
+    }
+
+    @media (max-width:700px){
+      .hero h2{font-size:40px}
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- TOP -->
+<div class="topbar">
+  <div class="wrap inner">
+    <div class="brand">
+      <img 
+  src="images/mankee-logo.png"
+  alt="MANKEE logo"
+  style="
+    height:40px;
+    width:auto;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,.6));
+  "
+/>
+
+      <div>
+        <h1>MANKEE</h1>
+        <span>DIRTY BY DESIGN</span>
+      </div>
+    </div>
+    <button class="btn">Cart</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="wrap">
+  <div class="hero">
+    <h2>DIRTY<br>BY DESIGN.</h2>
+    <p>
+      MANKEE is a grimey UK streetwear brand built on simplicity, wearability,
+      and raw identity. Nothing polished. Nothing forced.
+      Designed to look better worn.
+    </p>
+    <div class="cta">
+      <a href="#shop" class="btn primary">Shop MANKEE</a>
+      <a href="#about" class="btn">The Brand</a>
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCT -->
+  <div class="card">
+    <div class="tee-img">
+  <img 
+    src="images/mankee-oversized-tee.jpg"
+    alt="MANKEE oversized acid wash tee"
+    style="
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      padding:24px;
+      filter: drop-shadow(0 25px 60px rgba(0,0,0,.7));
+    "
+  />
+</div>
+
+      <div class="tee">
+        <div class="print">MANKEE</div>
+      </div>
+    </div>
+    <div class="meta">
+      <h3>Acid Wash Oversized Tee</h3>
+      <p>Heavy cotton. Oversized fit. Front chest print.</p>
+      <div class="price">£28</div>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" class="wrap">
+  <div class="about">
+    <h3>ABOUT MANKEE</h3>
+    <p>
+      MANKEE is built for people who don’t want clean edges or perfect finishes.
+      Inspired by grime, UK street culture, and real wear — every piece is made
+      to feel lived in from day one.
+    </p>
+    <p>
+      DIRTY BY DESIGN isn’t a slogan. It’s the point.
+      Oversized fits. Acid washes. Minimal graphics.
+      Designed to age, crack, and fade with time.
+    </p>
+  </div>
+</section>
+
+<footer>
+  © <span id="yr"></span> MANKEE — DIRTY BY DESIGN
+</footer>
+
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
